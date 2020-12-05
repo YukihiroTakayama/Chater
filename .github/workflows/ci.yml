@@ -1,0 +1,15 @@
+
+name: CI
+on:
+  pull_request:
+    types: [opened, synchronize]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: docker-compose up
+      run: docker-compose up -d --build
+    - name: Run rubocop
+      run: docker-compose exec -T app bundle exec rubocop
